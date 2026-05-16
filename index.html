@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>닌가보 공대 — Heavyweight Championship Codex</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Gowun+Batang:wght@400;700&family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg-0: #0a0807;
+      --bg-1: #110d09;
+      --bg-2: #1a130d;
+      --bg-3: #251a11;
+      --ink: #f5ecd6;
+      --ink-dim: #c4b791;
+      --ink-faint: #8a7e5d;
+      --gold: #c9a961;
+      --gold-bright: #efd58a;
+      --gold-deep: #7a6533;
+      --crimson: #8b1a1a;
+      --crimson-bright: #c93030;
+      --line: rgba(201, 169, 97, 0.28);
+      --line-soft: rgba(201, 169, 97, 0.12);
+
+      --display: "Cinzel", "Noto Serif KR", serif;
+      --display-kr: "Noto Serif KR", "Cinzel", serif;
+      --body: "Cormorant Garamond", "Gowun Batang", "Noto Serif KR", serif;
+      --body-kr: "Gowun Batang", "Cormorant Garamond", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg-0);
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 18px;
+      line-height: 1.55;
+      letter-spacing: 0.005em;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Film grain overlay */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 100;
+      opacity: 0.5;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.95 0 0 0 0 0.85 0 0 0 0 0.55 0 0 0 0.6 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    /* Vignette */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 99;
+      background:
+        radial-gradient(ellipse at 50% 0%, transparent 30%, rgba(0,0,0,0.45) 90%),
+        radial-gradient(ellipse at 50% 100%, transparent 40%, rgba(0,0,0,0.55) 95%);
+    }
+
+    ::selection {
+      background: var(--gold);
+      color: var(--bg-0);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ------- Top Marquee ------- */
+    .marquee {
+      position: relative;
+      z-index: 2;
+      border-bottom: 1px solid var(--line-soft);
+      background: linear-gradient(180deg, #100b07, #0a0807);
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      padding: 11px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .marquee b {
+      color: var(--gold);
+      font-weight: 600;
+    }
+    .marquee-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--gold);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--gold-bright);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.45; transform: scale(0.7); }
+    }
+
+    /* ------- Layout ------- */
+    .wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 32px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ------- Hero ------- */
+    .hero {
+      position: relative;
+      padding: 96px 0 84px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Hero radial glow */
+    .hero::before {
+      content: "";
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1200px;
+      height: 800px;
+      background: radial-gradient(ellipse, rgba(201, 169, 97, 0.18), transparent 55%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Sunburst */
+    .sunburst {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -55%);
+      width: 900px;
+      height: 900px;
+      opacity: 0.13;
+      pointer-events: none;
+      animation: spin 240s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: translate(-50%, -55%) rotate(360deg); }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-meta {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--display);
+      font-size: 12px;
+      letter-spacing: 0.45em;
+      color: var(--gold);
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: rise 1s 0.2s ease-out forwards;
+    }
+    .hero-meta::before,
+    .hero-meta::after {
+      content: "";
+      width: 38px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .hero-title-en {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(38px, 5.6vw, 78px);
+      letter-spacing: 0.08em;
+      line-height: 1;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: rise 1.1s 0.35s ease-out forwards;
+    }
+    .hero-title-en .ampersand {
+      font-family: var(--body);
+      font-style: italic;
+      font-weight: 400;
+      font-size: 0.7em;
+      color: var(--gold);
+      padding: 0 0.15em;
+      text-transform: lowercase;
+    }
+
+    .hero-title-kr {
+      font-family: var(--display-kr);
+      font-weight: 900;
+      font-size: clamp(72px, 11vw, 168px);
+      line-height: 0.95;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      margin: 8px 0 28px;
+      position: relative;
+      opacity: 0;
+      animation: rise 1.2s 0.5s ease-out forwards;
+    }
+    .hero-title-kr span {
+      display: inline-block;
+      background: linear-gradient(180deg, #f5e7b8 0%, #c9a961 50%, #8a7234 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 2px 30px rgba(201, 169, 97, 0.2);
+    }
+    .hero-title-kr .spacer {
+      display: inline-block;
+      width: 0.25em;
+    }
+
+    .ornament {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin: 18px 0 26px;
+      opacity: 0;
+      animation: rise 1s 0.7s ease-out forwards;
+    }
+    .ornament .line {
+      width: 96px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .ornament svg {
+      color: var(--gold);
+    }
+
+    .hero-subtitle {
+      font-family: var(--display);
+      font-size: clamp(13px, 1.1vw, 15px);
+      letter-spacing: 0.32em;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+      font-weight: 500;
+      margin-bottom: 12px;
+      opacity: 0;
+      animation: rise 1s 0.85s ease-out forwards;
+    }
+    .hero-subtitle-kr {
+      font-family: var(--body-kr);
+      font-size: clamp(16px, 1.4vw, 20px);
+      letter-spacing: 0.1em;
+      color: var(--ink-dim);
+      opacity: 0;
+      animation: rise 1s 1s ease-out forwards;
+    }
+    .hero-subtitle-kr b {
+      color: var(--gold-bright);
+      font-weight: 700;
+    }
+
+    /* Tale of the Tape band */
+    .tale {
+      margin-top: 64px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      opacity: 0;
+      animation: rise 1s 1.15s ease-out forwards;
+    }
+    .tale-cell {
+      padding: 22px 18px;
+      text-align: center;
+      border-right: 1px solid var(--line-soft);
+    }
+    .tale-cell:last-child {
+      border-right: none;
+    }
+    .tale-label {
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .tale-value {
+      font-family: var(--display-kr);
+      font-size: clamp(15px, 1.3vw, 18px);
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.02em;
+    }
+    .tale-value small {
+      display: block;
+      font-family: var(--body);
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--ink-faint);
+      letter-spacing: 0.08em;
+      margin-top: 4px;
+      text-transform: uppercase;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(28px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* ------- Section heading ------- */
+    .section {
+      padding: 96px 0;
+      position: relative;
+    }
+    .section + .section {
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .section-num {
+      font-family: var(--display);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+    }
+    .section-title {
+      font-family: var(--display-kr);
+      font-size: clamp(28px, 3.4vw, 46px);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      line-height: 1;
+    }
+    .section-rule {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--line), transparent);
+    }
+    .section-sub {
+      font-family: var(--display);
+      font-size: 12px;
+      letter-spacing: 0.34em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+    }
+
+    /* ------- Sheets ------- */
+    .sheet-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .sheet-card {
+      position: relative;
+      padding: 44px 40px;
+      background:
+        linear-gradient(160deg, rgba(201,169,97,0.04), transparent 60%),
+        var(--bg-1);
+      border: 1px solid var(--line);
+      transition: transform 0.6s cubic-bezier(.2,.7,.2,1), border-color 0.4s;
+      overflow: hidden;
+    }
+    .sheet-card::before {
+      content: "";
+      position: absolute;
+      inset: 8px;
+      border: 1px solid var(--line-soft);
+      pointer-events: none;
+    }
+    .sheet-card::after {
+      content: "";
+      position: absolute;
+      top: -100%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at center, rgba(201,169,97,0.18), transparent 40%);
+      opacity: 0;
+      transition: opacity 0.6s;
+      pointer-events: none;
+    }
+    .sheet-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+    }
+    .sheet-card:hover::after { opacity: 1; }
+
+    .sheet-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .sheet-tag::before {
+      content: "";
+      width: 22px;
+      height: 1px;
+      background: var(--gold);
+    }
+    .sheet-card h3 {
+      font-family: var(--display-kr);
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.15;
+      letter-spacing: 0.02em;
+      margin-bottom: 14px;
+    }
+    .sheet-card p {
+      font-family: var(--body-kr);
+      font-size: 16px;
+      color: var(--ink-dim);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      max-width: 38ch;
+    }
+    .sheet-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--display);
+      font-size: 12px;
+      letter-spacing: 0.34em;
+      color: var(--gold-bright);
+      text-transform: uppercase;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      width: 100%;
+      justify-content: space-between;
+      transition: color 0.3s, border-color 0.3s, padding 0.4s;
+    }
+    .sheet-cta .arrow {
+      transition: transform 0.4s cubic-bezier(.2,.7,.2,1);
+    }
+    .sheet-card:hover .sheet-cta {
+      color: var(--ink);
+      border-color: var(--gold);
+    }
+    .sheet-card:hover .sheet-cta .arrow {
+      transform: translateX(8px);
+    }
+
+    .sheet-emblem {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      width: 72px;
+      height: 72px;
+      opacity: 0.18;
+      color: var(--gold);
+      transition: opacity 0.5s, transform 0.7s;
+    }
+    .sheet-card:hover .sheet-emblem {
+      opacity: 0.4;
+      transform: rotate(15deg);
+    }
+
+    /* ------- Fight Card ------- */
+    .fight-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 18px;
+    }
+    .round {
+      grid-row: 1 / 3;
+      grid-column: 1;
+    }
+    .fight-card {
+      position: relative;
+      background:
+        linear-gradient(170deg, rgba(139,26,26,0.08), transparent 50%),
+        var(--bg-1);
+      border: 1px solid var(--line);
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 240px;
+      overflow: hidden;
+      transition: border-color 0.4s, transform 0.5s;
+      cursor: pointer;
+    }
+    .fight-card::before {
+      content: "";
+      position: absolute;
+      inset: 7px;
+      border: 1px solid var(--line-soft);
+      pointer-events: none;
+      transition: border-color 0.4s;
+    }
+    .fight-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+    .fight-card:hover::before {
+      border-color: rgba(201,169,97,0.35);
+    }
+
+    .fight-card.main {
+      grid-row: 1 / 3;
+      background:
+        linear-gradient(180deg, rgba(139,26,26,0.2), rgba(201,169,97,0.05) 70%),
+        var(--bg-2);
+      padding: 44px 36px 36px;
+    }
+    .fight-card.main .round-num {
+      font-size: 100px;
+    }
+
+    .round-tag {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .round-tag .danger {
+      color: var(--crimson-bright);
+    }
+
+    .round-num {
+      font-family: var(--display);
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 0.9;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+    .round-num .of {
+      font-size: 0.32em;
+      vertical-align: super;
+      color: var(--ink-faint);
+      letter-spacing: 0.3em;
+      margin-left: 4px;
+    }
+
+    .round-name-en {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.34em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .round-name-kr {
+      font-family: var(--display-kr);
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 18px;
+    }
+    .fight-card.main .round-name-kr {
+      font-size: 32px;
+      margin-bottom: 22px;
+    }
+    .round-name-kr .part {
+      display: block;
+      font-size: 0.66em;
+      font-weight: 400;
+      color: var(--gold-bright);
+      letter-spacing: 0.06em;
+      margin-top: 4px;
+    }
+
+    .fight-watch {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.3em;
+      color: var(--gold-bright);
+      text-transform: uppercase;
+    }
+    .fight-watch .play {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, transform 0.4s;
+    }
+    .fight-card:hover .fight-watch .play {
+      background: var(--gold);
+      color: var(--bg-0);
+      transform: scale(1.08);
+    }
+
+    /* Crown for main event */
+    .crown {
+      position: absolute;
+      top: -1px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 22px 8px;
+      background: var(--bg-0);
+      font-family: var(--display);
+      font-size: 10px;
+      letter-spacing: 0.4em;
+      color: var(--gold);
+      text-transform: uppercase;
+      border: 1px solid var(--gold);
+      border-top: 0;
+    }
+
+    .floor-4-pair {
+      grid-column: 3 / 5;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    /* ------- Codex (Useful Sites) ------- */
+    .codex-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .codex-entry {
+      padding: 40px 36px 36px;
+      border-right: 1px solid var(--line-soft);
+      position: relative;
+      transition: background 0.4s;
+    }
+    .codex-entry:last-child { border-right: none; }
+    .codex-entry:hover {
+      background: linear-gradient(180deg, rgba(201,169,97,0.05), transparent);
+    }
+    .codex-num {
+      font-family: var(--display);
+      font-size: 12px;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      margin-bottom: 24px;
+    }
+    .codex-title {
+      font-family: var(--display);
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .codex-sub {
+      font-family: var(--display-kr);
+      font-size: 14px;
+      color: var(--gold-bright);
+      letter-spacing: 0.08em;
+      margin-bottom: 18px;
+    }
+    .codex-desc {
+      font-family: var(--body-kr);
+      font-size: 15px;
+      color: var(--ink-dim);
+      line-height: 1.65;
+      margin-bottom: 28px;
+      min-height: 4.2em;
+    }
+    .codex-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.32em;
+      color: var(--gold-bright);
+      text-transform: uppercase;
+      padding-bottom: 4px;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, color 0.3s, gap 0.3s;
+    }
+    .codex-entry:hover .codex-link {
+      border-color: var(--gold);
+      color: var(--ink);
+      gap: 16px;
+    }
+
+    /* ------- Footer ------- */
+    footer {
+      padding: 64px 32px 48px;
+      text-align: center;
+      border-top: 1px solid var(--line);
+      position: relative;
+    }
+    .foot-orn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      margin-bottom: 28px;
+      color: var(--gold);
+    }
+    .foot-orn .line {
+      width: 64px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    footer p {
+      font-family: var(--display);
+      font-size: 11px;
+      letter-spacing: 0.4em;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    footer .signature {
+      font-family: var(--body);
+      font-style: italic;
+      font-size: 18px;
+      letter-spacing: 0.04em;
+      color: var(--gold-bright);
+      text-transform: none;
+    }
+
+    /* ------- Responsive ------- */
+    @media (max-width: 980px) {
+      .sheet-grid { grid-template-columns: 1fr; }
+      .fight-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+      }
+      .round, .fight-card.main {
+        grid-row: auto;
+        grid-column: 1 / 3;
+      }
+      .floor-4-pair {
+        grid-column: 1 / 3;
+      }
+      .codex-grid {
+        grid-template-columns: 1fr;
+      }
+      .codex-entry {
+        border-right: none;
+        border-bottom: 1px solid var(--line-soft);
+      }
+      .codex-entry:last-child { border-bottom: none; }
+      .tale {
+        grid-template-columns: 1fr 1fr;
+      }
+      .tale-cell:nth-child(2) { border-right: none; }
+      .tale-cell:nth-child(3), .tale-cell:nth-child(4) {
+        border-top: 1px solid var(--line-soft);
+      }
+    }
+    @media (max-width: 600px) {
+      .wrap { padding: 0 20px; }
+      .marquee { padding: 10px 20px; font-size: 9px; gap: 12px; }
+      .marquee .hide-sm { display: none; }
+      .hero { padding: 60px 0 48px; }
+      .section { padding: 64px 0; }
+      .section-head { flex-wrap: wrap; gap: 12px; }
+      .section-rule { display: none; }
+      .fight-grid { grid-template-columns: 1fr; }
+      .round, .fight-card.main, .floor-4-pair { grid-column: 1; }
+      .floor-4-pair { grid-template-columns: 1fr; }
+      .sheet-card { padding: 32px 24px; }
+      .sheet-emblem { width: 48px; height: 48px; top: 24px; right: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ TOP MARQUEE ============ -->
+  <div class="marquee">
+    <span><b>VOL. VII.IV</b> &nbsp;·&nbsp; SEASON OF ARCADIA</span>
+    <span class="hide-sm">HEAVYWEIGHT CHAMPIONSHIP · SAVAGE TIER · LIVE FROM EORZEA</span>
+    <span style="display:inline-flex;align-items:center;gap:10px"><span class="marquee-dot"></span> 09<b style="color:var(--crimson-bright)">STOP</b> · 영구정지</span>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <!-- Sunburst background -->
+    <svg class="sunburst" viewBox="0 0 200 200" aria-hidden="true">
+      <defs>
+        <radialGradient id="sb">
+          <stop offset="0%" stop-color="#c9a961" stop-opacity="0.0"/>
+          <stop offset="100%" stop-color="#c9a961" stop-opacity="1"/>
+        </radialGradient>
+      </defs>
+      <g stroke="url(#sb)" stroke-width="0.3" fill="none">
+        <!-- Generate sunburst rays -->
+        <g id="rays">
+          <line x1="100" y1="100" x2="100" y2="0"/>
+          <line x1="100" y1="100" x2="100" y2="200"/>
+          <line x1="100" y1="100" x2="0" y2="100"/>
+          <line x1="100" y1="100" x2="200" y2="100"/>
+          <line x1="100" y1="100" x2="35" y2="35"/>
+          <line x1="100" y1="100" x2="165" y2="35"/>
+          <line x1="100" y1="100" x2="35" y2="165"/>
+          <line x1="100" y1="100" x2="165" y2="165"/>
+          <line x1="100" y1="100" x2="65" y2="0"/>
+          <line x1="100" y1="100" x2="135" y2="0"/>
+          <line x1="100" y1="100" x2="65" y2="200"/>
+          <line x1="100" y1="100" x2="135" y2="200"/>
+          <line x1="100" y1="100" x2="0" y2="65"/>
+          <line x1="100" y1="100" x2="0" y2="135"/>
+          <line x1="100" y1="100" x2="200" y2="65"/>
+          <line x1="100" y1="100" x2="200" y2="135"/>
+          <line x1="100" y1="100" x2="15" y2="50"/>
+          <line x1="100" y1="100" x2="185" y2="50"/>
+          <line x1="100" y1="100" x2="15" y2="150"/>
+          <line x1="100" y1="100" x2="185" y2="150"/>
+          <line x1="100" y1="100" x2="50" y2="15"/>
+          <line x1="100" y1="100" x2="150" y2="15"/>
+          <line x1="100" y1="100" x2="50" y2="185"/>
+          <line x1="100" y1="100" x2="150" y2="185"/>
+        </g>
+        <circle cx="100" cy="100" r="40" stroke="#c9a961" stroke-width="0.4"/>
+        <circle cx="100" cy="100" r="58" stroke="#c9a961" stroke-width="0.2"/>
+        <circle cx="100" cy="100" r="80" stroke="#c9a961" stroke-width="0.3"/>
+      </g>
+    </svg>
+
+    <div class="wrap hero-inner">
+      <div class="hero-meta">
+        <span>Est. Patch 7.4</span>
+      </div>
+
+      <div class="hero-title-en">
+        Ningabo <span class="ampersand">&amp;</span> Co.
+      </div>
+
+      <h1 class="hero-title-kr">
+        <span>닌가보</span><span class="spacer"></span><span>공대</span>
+      </h1>
+
+      <div class="ornament">
+        <span class="line"></span>
+        <svg width="36" height="20" viewBox="0 0 36 20" aria-hidden="true">
+          <g fill="currentColor">
+            <path d="M18 0 L20 8 L28 6 L22 12 L26 20 L18 15 L10 20 L14 12 L8 6 L16 8 Z"/>
+          </g>
+        </svg>
+        <span class="line"></span>
+      </div>
+
+      <div class="hero-subtitle">Heavyweight Championship · Savage Tier</div>
+      <div class="hero-subtitle-kr">
+        극 <b>에누오</b> &nbsp;·&nbsp; 아르카디아 선수권 <b>헤비급 영식</b> &nbsp;1 — 4층
+      </div>
+
+      <!-- Tale of the tape -->
+      <div class="tale">
+        <div class="tale-cell">
+          <div class="tale-label">Tier</div>
+          <div class="tale-value">Savage<small>영식</small></div>
+        </div>
+        <div class="tale-cell">
+          <div class="tale-label">Title Bout</div>
+          <div class="tale-value">Eunuoia<small>극 에누오</small></div>
+        </div>
+        <div class="tale-cell">
+          <div class="tale-label">Rounds</div>
+          <div class="tale-value">04<small>Floors</small></div>
+        </div>
+        <div class="tale-cell">
+          <div class="tale-label">Sanction</div>
+          <div class="tale-value">09Stop<small>영구정지</small></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ SECTION I — SHEETS ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">I.</span>
+        <h2 class="section-title">공식 문서고</h2>
+        <span class="section-sub">The Archives</span>
+        <span class="section-rule"></span>
+      </div>
+
+      <div class="sheet-grid">
+        <a class="sheet-card" href="https://docs.google.com/spreadsheets/d/1FrtrwtdRtL_m2jjeQctj1ZrMYAzQJ7p1XQ7gdG7hCcw/edit?gid=1171166014#gid=1171166014" target="_blank" rel="noopener">
+          <svg class="sheet-emblem" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4">
+            <rect x="10" y="10" width="44" height="44"/>
+            <line x1="10" y1="22" x2="54" y2="22"/>
+            <line x1="10" y1="34" x2="54" y2="34"/>
+            <line x1="10" y1="46" x2="54" y2="46"/>
+            <line x1="22" y1="10" x2="22" y2="54"/>
+            <line x1="34" y1="10" x2="34" y2="54"/>
+            <line x1="46" y1="10" x2="46" y2="54"/>
+          </svg>
+          <div class="sheet-tag">Document № 01</div>
+          <h3>일정 &amp; 파밍 시트</h3>
+          <p>공대 일정, 출석, 파밍 진행 현황. 모든 약속과 분배는 여기에서 시작된다.</p>
+          <div class="sheet-cta">
+            <span>Open the Ledger</span>
+            <span class="arrow">→</span>
+          </div>
+        </a>
+
+        <a class="sheet-card" href="https://docs.google.com/spreadsheets/d/e/2PACX-1vTLAwqXtBNVIu3Ph7npSrWUUCp58wZzEd8L93wwnGyz2bvkBOoGAgdBdTRREGNzRwURC11D8IftiHsU/pubhtml#gid=1394761720" target="_blank" rel="noopener">
+          <svg class="sheet-emblem" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4">
+            <path d="M32 6 L52 16 L52 36 C52 48 32 58 32 58 C32 58 12 48 12 36 L12 16 Z"/>
+            <path d="M32 18 L32 46 M22 26 L42 26 M22 38 L42 38"/>
+          </svg>
+          <div class="sheet-tag">Document № 02</div>
+          <h3>영식 공략 &amp; 외생기 시트</h3>
+          <p>각 층 기믹 분담, 외부 생존기 로테이션, 마커 좌표. 전투 전에 반드시 숙지할 것.</p>
+          <div class="sheet-cta">
+            <span>Open the Codex</span>
+            <span class="arrow">→</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION II — FIGHT CARD ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">II.</span>
+        <h2 class="section-title">파이트 카드</h2>
+        <span class="section-sub">The Fight Card · 공략 영상</span>
+        <span class="section-rule"></span>
+      </div>
+
+      <div class="fight-grid">
+        <!-- MAIN EVENT — Extreme -->
+        <a class="fight-card main" href="https://youtu.be/qquMhIMAmxg?si=RR73Q2pPx2MKxdIG" target="_blank" rel="noopener">
+          <div class="crown">★ Title Bout · 메인 이벤트 ★</div>
+          <div>
+            <div class="round-tag">
+              <span class="danger">▲ EXTREME</span>
+              <span>09 STOP</span>
+            </div>
+            <div class="round-num">EX<span class="of">/MAIN</span></div>
+            <div class="round-name-en">Eunuoia · The Minstrel's Ballad</div>
+            <div class="round-name-kr">극 에누오</div>
+          </div>
+          <div class="fight-watch">
+            <span>Watch the Bout</span>
+            <span class="play">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M2 1 L9 5 L2 9 Z"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <!-- Round 1 -->
+        <a class="fight-card" href="https://youtu.be/UAiX8ETt4a8?si=csgYdBehGV2k3tr7" target="_blank" rel="noopener">
+          <div>
+            <div class="round-tag"><span>Round</span><span>01</span></div>
+            <div class="round-num">01<span class="of">/04</span></div>
+            <div class="round-name-en">Floor One</div>
+            <div class="round-name-kr">헤비급 영식 1층</div>
+          </div>
+          <div class="fight-watch">
+            <span>Watch</span>
+            <span class="play"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M2 1 L9 5 L2 9 Z"/></svg></span>
+          </div>
+        </a>
+
+        <!-- Round 2 -->
+        <a class="fight-card" href="https://www.youtube.com/watch?v=O-uIh6WefQQ" target="_blank" rel="noopener">
+          <div>
+            <div class="round-tag"><span>Round</span><span>02</span></div>
+            <div class="round-num">02<span class="of">/04</span></div>
+            <div class="round-name-en">Floor Two</div>
+            <div class="round-name-kr">헤비급 영식 2층</div>
+          </div>
+          <div class="fight-watch">
+            <span>Watch</span>
+            <span class="play"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M2 1 L9 5 L2 9 Z"/></svg></span>
+          </div>
+        </a>
+
+        <!-- Round 3 -->
+        <a class="fight-card" href="https://www.youtube.com/watch?v=9uL-qbQqSWc" target="_blank" rel="noopener">
+          <div>
+            <div class="round-tag"><span>Round</span><span>03</span></div>
+            <div class="round-num">03<span class="of">/04</span></div>
+            <div class="round-name-en">Floor Three</div>
+            <div class="round-name-kr">헤비급 영식 3층</div>
+          </div>
+          <div class="fight-watch">
+            <span>Watch</span>
+            <span class="play"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M2 1 L9 5 L2 9 Z"/></svg></span>
+          </div>
+        </a>
+
+        <!-- Round 4 — split into front/back -->
+        <div class="floor-4-pair">
+          <a class="fight-card" href="https://www.youtube.com/watch?v=nVeRVF-Kvng" target="_blank" rel="noopener">
+            <div>
+              <div class="round-tag"><span class="danger">Final · I</span><span>04 A</span></div>
+              <div class="round-num">04<span class="of">/04</span></div>
+              <div class="round-name-en">Floor Four · Opening</div>
+              <div class="round-name-kr">
+                헤비급 영식 4층
+                <span class="part">— 전반 · Part I —</span>
+              </div>
+            </div>
+            <div class="fight-watch">
+              <span>Watch</span>
+              <span class="play"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M2 1 L9 5 L2 9 Z"/></svg></span>
+            </div>
+          </a>
+
+          <a class="fight-card" href="https://www.youtube.com/watch?v=cwjgP9GNJpQ" target="_blank" rel="noopener">
+            <div>
+              <div class="round-tag"><span class="danger">Final · II</span><span>04 B</span></div>
+              <div class="round-num">04<span class="of">/04</span></div>
+              <div class="round-name-en">Floor Four · Closing</div>
+              <div class="round-name-kr">
+                헤비급 영식 4층
+                <span class="part">— 후반 · Part II —</span>
+              </div>
+            </div>
+            <div class="fight-watch">
+              <span>Watch</span>
+              <span class="play"><svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor"><path d="M2 1 L9 5 L2 9 Z"/></svg></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SECTION III — CODEX ============ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="section-num">III.</span>
+        <h2 class="section-title">챔피언의 보감</h2>
+        <span class="section-sub">Champion's Codex · 유용한 사이트</span>
+        <span class="section-rule"></span>
+      </div>
+
+      <div class="codex-grid">
+        <a class="codex-entry" href="https://www.thebalanceffxiv.com/" target="_blank" rel="noopener">
+          <div class="codex-num">— Entry № I —</div>
+          <div class="codex-title">The Balance</div>
+          <div class="codex-sub">딜 사이클 가이드라인</div>
+          <p class="codex-desc">잡별 로테이션과 우선순위, 패치별 변경점이 정리된 글로벌 레퍼런스. 모든 분석의 출발선.</p>
+          <span class="codex-link">Open the Archive →</span>
+        </a>
+
+        <a class="codex-entry" href="https://ffxiv-fudge.com/7-4-bis/#c5" target="_blank" rel="noopener">
+          <div class="codex-num">— Entry № II —</div>
+          <div class="codex-title">FFXIV Fudge</div>
+          <div class="codex-sub">7.4 황금 BIS 표</div>
+          <p class="codex-desc">현 패치 황금 장비 BIS 세팅을 잡별로 정리. 약품, 음식, 마테리아까지 한눈에.</p>
+          <span class="codex-link">Open the Ledger →</span>
+        </a>
+
+        <a class="codex-entry" href="https://xivanalysis.com/" target="_blank" rel="noopener">
+          <div class="codex-num">— Entry № III —</div>
+          <div class="codex-title">XIV Analysis</div>
+          <div class="codex-sub">사이클 분석 / 클렌징</div>
+          <p class="codex-desc">로그 한 줄을 던지면 결점과 개선점을 짚어주는 자동 분석. 자기 클렌징의 시작.</p>
+          <span class="codex-link">Open the Mirror →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer>
+    <div class="foot-orn">
+      <span class="line"></span>
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2">
+        <circle cx="16" cy="16" r="9"/>
+        <circle cx="16" cy="16" r="4" fill="currentColor"/>
+        <path d="M16 2 L16 7 M16 25 L16 30 M2 16 L7 16 M25 16 L30 16"/>
+      </svg>
+      <span class="line"></span>
+    </div>
+    <p>Compiled for Ningabo &amp; Co. · Patch 7.4 · Heavyweight Tier</p>
+    <p class="signature">— 닌가보 공대 —</p>
+  </footer>
+
+</body>
+</html>
